@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/services/database_service.dart';
 import '../../../../shared/models/recent_surah_model.dart';
-import '../../../quran/presentation/providers/quran_providers.dart';
 
 class RecentSurahsSection extends ConsumerWidget {
   const RecentSurahsSection({super.key});
@@ -28,14 +28,10 @@ class RecentSurahsSection extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Recently Opened',
+                  'recently_opened'.tr(),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('See All'),
                 ),
               ],
             ),
@@ -59,10 +55,10 @@ class RecentSurahsSection extends ConsumerWidget {
                         width: 120,
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: AppTheme.primaryColor.withOpacity(0.08),
+                          color: AppTheme.primaryColor.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: AppTheme.primaryColor.withOpacity(0.2),
+                            color: AppTheme.primaryColor.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Column(

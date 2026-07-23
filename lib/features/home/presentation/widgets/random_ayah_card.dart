@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../core/theme/app_theme.dart';
 import '../../../quran/presentation/providers/quran_providers.dart';
 
 class RandomAyahCard extends ConsumerWidget {
@@ -21,10 +21,10 @@ class RandomAyahCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.casino_rounded, color: Colors.purple, size: 20),
+                const Icon(Icons.casino_rounded, color: Color(0xFF1B5E20), size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'Random Ayah',
+                  'random_ayah'.tr(),
                   style: GoogleFonts.cairo(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -42,7 +42,7 @@ class RandomAyahCard extends ConsumerWidget {
             randomAyah.when(
               data: (data) {
                 final ayah = data['data'];
-                if (ayah == null) return const Text('No data available');
+                if (ayah == null) return const SizedBox.shrink();
                 return Text(
                   ayah['text'] ?? '',
                   style: GoogleFonts.amiri(fontSize: 18, height: 1.8),
@@ -51,7 +51,7 @@ class RandomAyahCard extends ConsumerWidget {
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Text('Error: $e'),
+              error: (e, _) => Text('error_occurred'.tr()),
             ),
           ],
         ),

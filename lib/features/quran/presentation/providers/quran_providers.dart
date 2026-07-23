@@ -14,6 +14,12 @@ final surahAyahsProvider =
   return await repository.getSurahAyahs(surahNumber);
 });
 
+final juzAyahsProvider =
+    FutureProvider.family<List<AyahModel>, int>((ref, juzNumber) async {
+  final repository = ref.read(quranRepositoryProvider);
+  return await repository.getJuzAyahs(juzNumber);
+});
+
 final randomAyahProvider = FutureProvider<Map<String, dynamic>>((ref) async {
   final repository = ref.read(quranRepositoryProvider);
   return await repository.getRandomAyah();

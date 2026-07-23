@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/theme/app_theme.dart';
 import 'core/router/app_router.dart';
 import 'core/services/storage_service.dart';
-import 'core/services/connectivity_service.dart';
 import 'shared/services/database_service.dart';
 import 'features/settings/presentation/providers/settings_providers.dart';
 
@@ -31,6 +30,9 @@ Future<void> main() async {
     ),
   );
 
+  final savedLanguage = prefs.getString('language') ?? 'en';
+  final startLocale = Locale(savedLanguage);
+
   runApp(
     ProviderScope(
       overrides: [
@@ -41,6 +43,7 @@ Future<void> main() async {
         supportedLocales: const [Locale('en'), Locale('bn'), Locale('ar')],
         path: 'assets/l10n',
         fallbackLocale: const Locale('en'),
+        startLocale: startLocale,
         child: const QuranApp(),
       ),
     ),
@@ -55,14 +58,6 @@ class QuranApp extends ConsumerStatefulWidget {
 }
 
 class _QuranAppState extends ConsumerState<QuranApp> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(settingsInitializerProvider);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeModeProvider);

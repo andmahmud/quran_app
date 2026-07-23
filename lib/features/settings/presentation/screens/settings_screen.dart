@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/services/storage_service.dart';
@@ -20,38 +20,38 @@ class SettingsScreen extends ConsumerWidget {
     final language = ref.watch(languageProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text('settings'.tr())),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _SectionHeader(title: 'Appearance'),
+          _SectionHeader(title: 'appearance'.tr()),
           Card(
             child: Column(
               children: [
                 SettingsTile(
                   icon: Icons.dark_mode,
-                  title: 'Theme',
+                  title: 'theme'.tr(),
                   subtitle: _getThemeName(themeMode),
                   onTap: () => _showThemeDialog(context, ref, themeMode),
                 ),
                 const Divider(height: 1),
                 SettingsTile(
                   icon: Icons.text_fields,
-                  title: 'Arabic Font Size',
+                  title: 'arabic_font_size'.tr(),
                   subtitle: '${arabicFontSize.round()}px',
                   onTap: () => _showFontSizeDialog(context, ref, arabicFontSize),
                 ),
                 const Divider(height: 1),
                 SettingsTile(
                   icon: Icons.format_size,
-                  title: 'Translation Font Size',
+                  title: 'translation_font_size'.tr(),
                   subtitle: '${translationFontSize.round()}px',
                   onTap: () => _showTranslationSizeDialog(context, ref, translationFontSize),
                 ),
                 const Divider(height: 1),
                 SettingsTile(
                   icon: Icons.format_line_spacing,
-                  title: 'Line Height',
+                  title: 'line_height'.tr(),
                   subtitle: lineHeight.toStringAsFixed(1),
                   onTap: () => _showLineHeightDialog(context, ref, lineHeight),
                 ),
@@ -59,13 +59,13 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _SectionHeader(title: 'Reading'),
+          _SectionHeader(title: 'reading'.tr()),
           Card(
             child: Column(
               children: [
                 SettingsTile(
                   icon: Icons.language,
-                  title: 'Language',
+                  title: 'language'.tr(),
                   subtitle: _getLanguageName(language),
                   onTap: () => _showLanguageDialog(context, ref, language),
                 ),
@@ -73,34 +73,34 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _SectionHeader(title: 'Audio'),
+          _SectionHeader(title: 'audio'.tr()),
           Card(
             child: Column(
               children: [
                 SettingsTile(
                   icon: Icons.high_quality,
-                  title: 'Audio Quality',
-                  subtitle: ref.watch(audioQualityProvider),
-                  onTap: () {},
+                  title: 'audio_quality'.tr(),
+                  subtitle: ref.watch(audioQualityProvider).tr(),
+                  onTap: () => _showAudioQualityDialog(context, ref, ref.watch(audioQualityProvider)),
                 ),
                 const Divider(height: 1),
                 SettingsTile(
                   icon: Icons.record_voice_over,
-                  title: 'Preferred Reciter',
+                  title: 'preferred_reciter'.tr(),
                   subtitle: ref.watch(preferredReciterProvider),
-                  onTap: () {},
+                  onTap: () => _showReciterDialog(context, ref, ref.watch(preferredReciterProvider)),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 16),
-          _SectionHeader(title: 'About'),
+          _SectionHeader(title: 'about'.tr()),
           Card(
             child: Column(
               children: [
                 SettingsTile(
                   icon: Icons.info_outline,
-                  title: 'Version',
+                  title: 'version'.tr(),
                   subtitle: AppConstants.appVersion,
                   onTap: () {},
                 ),
@@ -116,22 +116,22 @@ class SettingsScreen extends ConsumerWidget {
   String _getThemeName(ThemeMode mode) {
     switch (mode) {
       case ThemeMode.light:
-        return 'Light';
+        return 'light'.tr();
       case ThemeMode.dark:
-        return 'Dark';
+        return 'dark'.tr();
       case ThemeMode.system:
-        return 'System';
+        return 'system'.tr();
     }
   }
 
   String _getLanguageName(String code) {
     switch (code) {
       case 'en':
-        return 'English';
+        return 'english'.tr();
       case 'bn':
-        return 'Bangla';
+        return 'bangla'.tr();
       case 'ar':
-        return 'Arabic';
+        return 'arabic'.tr();
       default:
         return code;
     }
@@ -141,24 +141,26 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Theme'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: ThemeMode.values.map((mode) {
-            return RadioListTile<ThemeMode>(
-              title: Text(_getThemeName(mode)),
-              value: mode,
-              groupValue: current,
-              onChanged: (value) {
-                if (value != null) {
-                  ref.read(themeModeProvider.notifier).state = value;
-                  ref.read(storageServiceProvider).setInt(
-                      AppConstants.themeKey, value.index);
-                  Navigator.pop(context);
-                }
-              },
-            );
-          }).toList(),
+        title: Text('theme'.tr()),
+        content: RadioGroup<ThemeMode>(
+          groupValue: current,
+          onChanged: (value) {
+            if (value != null) {
+              ref.read(themeModeProvider.notifier).state = value;
+              ref.read(storageServiceProvider).setInt(
+                  AppConstants.themeKey, value.index);
+              Navigator.pop(context);
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: ThemeMode.values.map((mode) {
+              return RadioListTile<ThemeMode>(
+                title: Text(_getThemeName(mode)),
+                value: mode,
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
@@ -169,7 +171,7 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Arabic Font Size'),
+        title: Text('arabic_font_size'.tr()),
         content: StatefulBuilder(
           builder: (context, setDialogState) {
             return Column(
@@ -196,7 +198,7 @@ class SettingsScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Done'),
+            child: Text('ok'.tr()),
           ),
         ],
       ),
@@ -208,7 +210,7 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Translation Font Size'),
+        title: Text('translation_font_size'.tr()),
         content: StatefulBuilder(
           builder: (context, setDialogState) {
             return Column(
@@ -235,7 +237,7 @@ class SettingsScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Done'),
+            child: Text('ok'.tr()),
           ),
         ],
       ),
@@ -247,7 +249,7 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Line Height'),
+        title: Text('line_height'.tr()),
         content: StatefulBuilder(
           builder: (context, setDialogState) {
             return Column(
@@ -274,42 +276,126 @@ class SettingsScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Done'),
+            child: Text('ok'.tr()),
           ),
         ],
       ),
     );
   }
 
-  void _showLanguageDialog(
-      BuildContext context, WidgetRef ref, String current) {
-    final languages = [
-      {'code': 'en', 'name': 'English'},
-      {'code': 'bn', 'name': 'Bangla'},
-      {'code': 'ar', 'name': 'Arabic'},
-    ];
-
+  void _showAudioQualityDialog(BuildContext context, WidgetRef ref, String current) {
+    final qualities = ['low', 'medium', 'high'];
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Language'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: languages.map((lang) {
-            return RadioListTile<String>(
-              title: Text(lang['name']!),
-              value: lang['code']!,
-              groupValue: current,
-              onChanged: (value) {
-                if (value != null) {
-                  ref.read(languageProvider.notifier).state = value;
-                  ref.read(storageServiceProvider)
-                      .setString(AppConstants.languageKey, value);
-                  Navigator.pop(context);
-                }
-              },
-            );
-          }).toList(),
+        title: Text('audio_quality'.tr()),
+        content: RadioGroup<String>(
+          groupValue: current,
+          onChanged: (value) {
+            if (value != null) {
+              ref.read(audioQualityProvider.notifier).state = value;
+              ref.read(storageServiceProvider).setString(AppConstants.audioQualityKey, value);
+              Navigator.pop(context);
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: qualities.map((q) {
+              return RadioListTile<String>(
+                title: Text(q.tr()),
+                value: q,
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showReciterDialog(BuildContext context, WidgetRef ref, String current) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('preferred_reciter'.tr()),
+        content: RadioGroup<String>(
+          groupValue: current,
+          onChanged: (value) {
+            if (value != null) {
+              ref.read(preferredReciterProvider.notifier).state = value;
+              ref.read(storageServiceProvider).setString(AppConstants.preferredReciterKey, value);
+              Navigator.pop(context);
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<String>(
+                title: const Text('Mishary Rashid Alafasy'),
+                subtitle: const Text('ar.alafasy'),
+                value: 'ar.alafasy',
+              ),
+              RadioListTile<String>(
+                title: const Text('Muhammad Jibreel'),
+                subtitle: const Text('ar.muhammadjibreel'),
+                value: 'ar.muhammadjibreel',
+              ),
+              RadioListTile<String>(
+                title: const Text('Abdul Basit (Murattal)'),
+                subtitle: const Text('ar.maalminturanquran'),
+                value: 'ar.maalminturanquran',
+              ),
+              RadioListTile<String>(
+                title: const Text('Mahmoud Khalil Al-Husary'),
+                subtitle: const Text('ar.husary'),
+                value: 'ar.husary',
+              ),
+              RadioListTile<String>(
+                title: const Text('Muhammad Ayyoub'),
+                subtitle: const Text('ar.ayyoub'),
+                value: 'ar.ayyoub',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showLanguageDialog(
+      BuildContext context, WidgetRef ref, String current) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('language'.tr()),
+        content: RadioGroup<String>(
+          groupValue: current,
+          onChanged: (value) {
+            if (value != null) {
+              ref.read(languageProvider.notifier).state = value;
+              ref.read(storageServiceProvider)
+                  .setString(AppConstants.languageKey, value);
+              final locale = Locale(value);
+              context.setLocale(locale);
+              Navigator.pop(context);
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<String>(
+                title: Text('english'.tr()),
+                value: 'en',
+              ),
+              RadioListTile<String>(
+                title: Text('bangla'.tr()),
+                value: 'bn',
+              ),
+              RadioListTile<String>(
+                title: Text('arabic'.tr()),
+                value: 'ar',
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../core/theme/app_theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class QuickActionsGrid extends StatelessWidget {
   const QuickActionsGrid({super.key});
@@ -12,38 +11,38 @@ class QuickActionsGrid extends StatelessWidget {
     final actions = [
       _ActionItem(
         icon: Icons.menu_book_rounded,
-        label: 'Surah List',
-        color: AppTheme.primaryColor,
+        labelKey: 'surah_list',
+        color: const Color(0xFF1B5E20),
         route: '/home/surah-list',
       ),
       _ActionItem(
         icon: Icons.book_rounded,
-        label: 'Juz List',
-        color: Colors.orange.shade700,
+        labelKey: 'juz_list',
+        color: const Color(0xFF2E7D32),
         route: '/home/juz-list',
       ),
       _ActionItem(
         icon: Icons.headphones_rounded,
-        label: 'Audio',
-        color: Colors.blue.shade700,
+        labelKey: 'audio',
+        color: const Color(0xFF388E3C),
         route: '/home/audio-player',
       ),
       _ActionItem(
         icon: Icons.location_on_rounded,
-        label: 'Prayer Times',
-        color: Colors.teal.shade700,
+        labelKey: 'prayer_times',
+        color: const Color(0xFF43A047),
         route: '/home/prayer-times',
       ),
       _ActionItem(
         icon: Icons.explore_rounded,
-        label: 'Qibla',
-        color: Colors.purple.shade700,
+        labelKey: 'qibla',
+        color: const Color(0xFF4CAF50),
         route: '/home/qibla',
       ),
       _ActionItem(
         icon: Icons.search_rounded,
-        label: 'Search',
-        color: Colors.red.shade700,
+        labelKey: 'search',
+        color: const Color(0xFF66BB6A),
         route: '/home/search',
       ),
     ];
@@ -74,7 +73,7 @@ class QuickActionsGrid extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: action.color.withOpacity(0.08),
+              color: action.color.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -83,7 +82,7 @@ class QuickActionsGrid extends StatelessWidget {
                 Icon(action.icon, color: action.color, size: 28),
                 const SizedBox(height: 8),
                 Text(
-                  action.label,
+                  action.labelKey.tr(),
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -106,13 +105,13 @@ class QuickActionsGrid extends StatelessWidget {
 
 class _ActionItem {
   final IconData icon;
-  final String label;
+  final String labelKey;
   final Color color;
   final String route;
 
   const _ActionItem({
     required this.icon,
-    required this.label,
+    required this.labelKey,
     required this.color,
     required this.route,
   });

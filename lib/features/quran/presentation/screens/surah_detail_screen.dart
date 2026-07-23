@@ -3,15 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../providers/quran_providers.dart';
 import '../widgets/ayah_card.dart';
-import '../../../bookmark/presentation/providers/bookmark_providers.dart';
 import '../../../settings/presentation/providers/settings_providers.dart';
 
 class SurahDetailScreen extends ConsumerStatefulWidget {

@@ -57,7 +57,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   gradient: LinearGradient(
                     colors: [
                       AppTheme.primaryColor,
-                      AppTheme.primaryColor.withOpacity(0.8),
+                      AppTheme.primaryColor.withValues(alpha: 0.8),
                     ],
                   ),
                 ),

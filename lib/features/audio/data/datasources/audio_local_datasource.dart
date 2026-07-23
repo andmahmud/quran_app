@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:just_audio/just_audio.dart';
 import '../../../../shared/services/database_service.dart';
 import '../../../../shared/models/downloaded_audio_model.dart';
-import '../../../../core/constants/reciters.dart';
 
 final audioLocalDataSourceProvider = Provider<AudioLocalDataSource>((ref) {
   return AudioLocalDataSource(ref.read(databaseServiceProvider));

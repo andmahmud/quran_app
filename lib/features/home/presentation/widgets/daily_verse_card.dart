@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../quran/presentation/providers/quran_providers.dart';
@@ -22,10 +23,10 @@ class DailyVerseCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.auto_awesome, color: AppTheme.goldColor, size: 20),
+                const Icon(Icons.auto_awesome, color: Color(0xFF388E3C), size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'Verse of the Day',
+                  'verse_of_the_day'.tr(),
                   style: GoogleFonts.cairo(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -38,7 +39,7 @@ class DailyVerseCard extends ConsumerWidget {
               data: (data) {
                 final ayah = data['data'];
                 if (ayah == null) {
-                  return const Text('No verse available');
+                  return const Text('');
                 }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,7 @@ class DailyVerseCard extends ConsumerWidget {
                 child: CircularProgressIndicator(),
               ),
               error: (e, _) => Text(
-                'Tap to load verse',
+                'error_occurred'.tr(),
                 style: TextStyle(color: Colors.grey.shade500),
               ),
             ),

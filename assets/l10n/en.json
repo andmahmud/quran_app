@@ -55,5 +55,9 @@
   "version": "Version",
   "appearance": "Appearance",
   "reading": "Reading",
-  "about": "About"
+  "about": "About",
+  "ok": "OK",
+  "low": "Low",
+  "medium": "Medium",
+  "high": "High"
 }

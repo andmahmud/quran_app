@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_theme.dart';
 
@@ -24,7 +25,7 @@ class JuzListScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       AppTheme.primaryColor,
-                      AppTheme.primaryColor.withOpacity(0.7),
+                      AppTheme.primaryColor.withValues(alpha: 0.7),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(12),
@@ -45,7 +46,7 @@ class JuzListScreen extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () => context.push('/home/juz/${index + 1}'),
             ),
           )
               .animate()

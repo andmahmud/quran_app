@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/app_utils.dart';
-import '../../../../core/constants/reciters.dart';
 import '../providers/audio_providers.dart';
 import '../../data/repositories/audio_repository_impl.dart';
 
@@ -25,14 +22,16 @@ class AudioPlayerScreen extends ConsumerStatefulWidget {
 }
 
 class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
+  late final AudioPlayer _player;
+
   @override
   void initState() {
     super.initState();
+    _player = ref.read(audioPlayerProvider);
     _initAudio();
   }
 
   Future<void> _initAudio() async {
-    final player = ref.read(audioPlayerProvider);
     final reciter = ref.read(currentReciterProvider);
 
     final url = ref.read(audioRepositoryProvider).getAudioUrl(
@@ -41,12 +40,14 @@ class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
         );
 
     try {
-      await player.setUrl(url);
+      await _player.setUrl(url);
+      if (!mounted) return;
       ref.read(isPlayingProvider.notifier).state = true;
       ref.read(currentSurahProvider.notifier).state = widget.surahNumber;
-      await player.play();
+      await _player.play();
     } catch (e) {
-      if (mounted) {
+      if (!mounted) return;
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error playing audio: $e')),
         );
@@ -56,8 +57,7 @@ class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
 
   @override
   void dispose() {
-    final player = ref.read(audioPlayerProvider);
-    player.stop();
+    _player.stop();
     super.dispose();
   }
 
@@ -105,7 +105,7 @@ class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
                         Text(
                           reciter.name,
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withValues(alpha: 0.7),
                             fontSize: 12,
                           ),
                         ),
@@ -122,9 +122,9 @@ class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
                 height: 160,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withValues(alpha: 0.3),
                     width: 2,
                   ),
                 ),
@@ -163,7 +163,7 @@ class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
                             value: position.inMilliseconds.toDouble(),
                             max: duration.inMilliseconds.toDouble().clamp(1, double.infinity),
                             activeColor: Colors.white,
-                            inactiveColor: Colors.white.withOpacity(0.3),
+                            inactiveColor: Colors.white.withValues(alpha: 0.3),
                             onChanged: (value) {
                               player.seek(
                                   Duration(milliseconds: value.toInt()));
@@ -179,14 +179,14 @@ class _AudioPlayerScreenState extends ConsumerState<AudioPlayerScreen> {
                             Text(
                               AppUtils.formatDuration(position),
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
                               ),
                             ),
                             Text(
                               AppUtils.formatDuration(duration),
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 fontSize: 12,
                               ),
                             ),

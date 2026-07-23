@@ -14,7 +14,7 @@ class TasbihScreen extends StatefulWidget {
 
 class _TasbihScreenState extends State<TasbihScreen> {
   int _count = 0;
-  int _target = 33;
+  final int _target = 33;
   int _selectedIndex = 0;
 
   final List<Map<String, String>> _dhikr = [
@@ -60,7 +60,7 @@ class _TasbihScreenState extends State<TasbihScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppTheme.primaryColor.withOpacity(0.05),
+              AppTheme.primaryColor.withValues(alpha: 0.05),
               Theme.of(context).scaffoldBackgroundColor,
             ],
           ),

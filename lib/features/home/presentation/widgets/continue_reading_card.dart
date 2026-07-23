@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/services/database_service.dart';
 import '../../../../shared/models/last_read_model.dart';
-import '../../../quran/presentation/providers/quran_providers.dart';
 
 class ContinueReadingCard extends ConsumerWidget {
   const ContinueReadingCard({super.key});
@@ -39,7 +39,7 @@ class ContinueReadingCard extends ConsumerWidget {
                 gradient: LinearGradient(
                   colors: [
                     AppTheme.primaryColor,
-                    AppTheme.primaryColor.withOpacity(0.8),
+                    AppTheme.primaryColor.withValues(alpha: 0.8),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -54,7 +54,7 @@ class ContinueReadingCard extends ConsumerWidget {
                       const Icon(Icons.bookmark, color: Colors.white, size: 20),
                       const SizedBox(width: 8),
                       Text(
-                        'Continue Reading',
+                        'continue_reading'.tr(),
                         style: GoogleFonts.cairo(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -76,7 +76,7 @@ class ContinueReadingCard extends ConsumerWidget {
                   Text(
                     'Last read: ${DateFormat('dd MMM yyyy').format(lastRead.updatedAt)}',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       fontSize: 12,
                     ),
                   ),
@@ -87,12 +87,12 @@ class ContinueReadingCard extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        'Continue',
-                        style: TextStyle(
+                      child: Text(
+                        'continue_reading'.tr(),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,

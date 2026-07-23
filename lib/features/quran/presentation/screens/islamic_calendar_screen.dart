@@ -37,7 +37,7 @@ class IslamicCalendarScreen extends ConsumerWidget {
                     gradient: LinearGradient(
                       colors: [
                         AppTheme.primaryColor,
-                        AppTheme.primaryColor.withOpacity(0.8),
+                        AppTheme.primaryColor.withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(24),
@@ -64,7 +64,7 @@ class IslamicCalendarScreen extends ConsumerWidget {
                         hijri['year']?.toString() ?? '',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
                       ),
                       const Text(
@@ -109,7 +109,7 @@ class IslamicCalendarScreen extends ConsumerWidget {
                   return Card(
                     margin: const EdgeInsets.only(bottom: 6),
                     color: isCurrentMonth
-                        ? AppTheme.primaryColor.withOpacity(0.1)
+                        ? AppTheme.primaryColor.withValues(alpha: 0.1)
                         : null,
                     child: ListTile(
                       leading: Container(

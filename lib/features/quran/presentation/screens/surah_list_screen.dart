@@ -132,7 +132,7 @@ class _SurahListScreenState extends ConsumerState<SurahListScreen>
                               width: 44,
                               height: 44,
                               decoration: BoxDecoration(
-                                color: AppTheme.primaryColor.withOpacity(0.1),
+                                color: AppTheme.primaryColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
@@ -211,7 +211,7 @@ class JuzListWidget extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.1),
+                color: AppTheme.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
@@ -226,7 +226,7 @@ class JuzListWidget extends StatelessWidget {
             ),
             title: Text('Juz ${index + 1}'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
+            onTap: () => context.push('/home/juz/${index + 1}'),
           ),
         );
       },

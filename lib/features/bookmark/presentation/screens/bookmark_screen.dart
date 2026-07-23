@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/empty_state_widget.dart';
@@ -17,11 +17,11 @@ class BookmarkScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bookmarks'),
+        title: Text('bookmarks'.tr()),
       ),
       body: bookmarks.isEmpty
-          ? const EmptyStateWidget(
-              message: 'No bookmarks yet.\nStart reading and bookmark your favorite verses.',
+          ? EmptyStateWidget(
+              message: 'no_bookmarks'.tr(),
               icon: Icons.bookmark_border,
             )
           : ListView.builder(
@@ -36,7 +36,7 @@ class BookmarkScreen extends ConsumerWidget {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: AppTheme.primaryColor.withOpacity(0.1),
+                        color: AppTheme.primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(

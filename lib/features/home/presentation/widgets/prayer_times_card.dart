@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../../core/theme/app_theme.dart';
 
 class PrayerTimesCard extends ConsumerWidget {
   const PrayerTimesCard({super.key});
@@ -23,10 +22,10 @@ class PrayerTimesCard extends ConsumerWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
-                      Colors.teal.shade400,
-                      Colors.teal.shade700,
+                      Color(0xFF388E3C),
+                      Color(0xFF1B5E20),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(16),
@@ -43,7 +42,7 @@ class PrayerTimesCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Prayer Times',
+                      'prayer_times'.tr(),
                       style: GoogleFonts.cairo(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -51,7 +50,7 @@ class PrayerTimesCard extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Tap to see all prayer times',
+                      'prayer_times'.tr(),
                       style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 13,

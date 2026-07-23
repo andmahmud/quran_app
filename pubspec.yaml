@@ -27,7 +27,7 @@ dependencies:
   path: ^1.9.1
   share_plus: ^10.1.4
   screenshot: ^3.0.0
-  image_gallery_saver: ^2.0.3
+  image_gallery_saver_plus: ^5.1.1
   shimmer: ^3.0.0
   equatable: ^2.0.7
   cached_network_image: ^3.4.1

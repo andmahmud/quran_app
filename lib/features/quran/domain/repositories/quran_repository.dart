@@ -5,6 +5,7 @@ abstract class QuranRepository {
   Future<List<SurahModel>> getAllSurahs();
   Future<SurahModel?> getSurah(int surahNumber);
   Future<List<AyahModel>> getSurahAyahs(int surahNumber);
+  Future<List<AyahModel>> getJuzAyahs(int juzNumber);
   Future<List<AyahModel>> searchAyahs(String query);
   Future<Map<String, dynamic>> getRandomAyah();
 }

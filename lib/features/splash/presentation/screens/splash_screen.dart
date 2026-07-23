@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/services/storage_service.dart';
@@ -60,7 +61,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
+                color: Colors.white.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Center(
@@ -76,7 +77,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 .scale(begin: const Offset(0.5, 0.5)),
             const SizedBox(height: 24),
             Text(
-              'Al Quran',
+              'splash_title'.tr(),
               style: GoogleFonts.amiri(
                 fontSize: 40,
                 fontWeight: FontWeight.w700,
@@ -88,7 +89,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 .slideY(begin: 0.3),
             const SizedBox(height: 8),
             Text(
-              'The Holy Quran',
+              'splash_subtitle'.tr(),
               style: GoogleFonts.cairo(
                 fontSize: 16,
                 color: Colors.white70,

@@ -27,8 +27,6 @@ class SurahCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: InkWell(
@@ -42,7 +40,7 @@ class SurahCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  color: AppTheme.primaryColor.withValues(alpha: 0.1),
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -87,7 +85,7 @@ class SurahCard extends StatelessWidget {
                             color: (revelationType.toLowerCase() == 'meccan'
                                     ? Colors.amber
                                     : Colors.green)
-                                .withOpacity(0.1),
+                                .withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(

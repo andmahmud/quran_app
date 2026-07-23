@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +7,7 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/quran/presentation/screens/surah_list_screen.dart';
 import '../../features/quran/presentation/screens/surah_detail_screen.dart';
 import '../../features/quran/presentation/screens/juz_list_screen.dart';
+import '../../features/quran/presentation/screens/juz_detail_screen.dart';
 import '../../features/audio/presentation/screens/audio_player_screen.dart';
 import '../../features/bookmark/presentation/screens/bookmark_screen.dart';
 import '../../features/search/presentation/screens/search_screen.dart';
@@ -19,8 +19,6 @@ import '../constants/app_constants.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final storageService = ref.read(storageServiceProvider);
-  final onboardingComplete =
-      storageService.getBool(AppConstants.onboardingCompleteKey) ?? false;
 
   return GoRouter(
     initialLocation: '/',
@@ -50,6 +48,14 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'juz-list',
             name: 'juz-list',
             builder: (context, state) => const JuzListScreen(),
+          ),
+          GoRoute(
+            path: 'juz/:juzNumber',
+            name: 'juz-detail',
+            builder: (context, state) {
+              final juzNumber = int.parse(state.pathParameters['juzNumber']!);
+              return JuzDetailScreen(juzNumber: juzNumber);
+            },
           ),
           GoRoute(
             path: 'surah/:surahNumber',
@@ -108,7 +114,9 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       if (isSplash || isOnboarding) return null;
 
-      if (!onboardingComplete && state.matchedLocation != '/onboarding') {
+      final onboardingComplete =
+          storageService.getBool(AppConstants.onboardingCompleteKey) ?? false;
+      if (!onboardingComplete) {
         return '/onboarding';
       }
       return null;

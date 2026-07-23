@@ -126,4 +126,56 @@ class QuranRepositoryImpl implements QuranRepository {
       throw ServerException(message: e.toString());
     }
   }
+
+  @override
+  Future<List<AyahModel>> getJuzAyahs(int juzNumber) async {
+    try {
+      final response = await remoteDataSource.getJuz(juzNumber);
+      final dynamic juzData = response['data'];
+      if (juzData is List && juzData.isNotEmpty) {
+        final editions = juzData;
+        final arabicAyahs = editions[0]['ayahs'] as List<dynamic>? ?? [];
+        final englishEditions = editions.length > 1 ? editions[1] : null;
+        final englishAyahs = englishEditions?['ayahs'] as List<dynamic>? ?? [];
+        final ayahs = <AyahModel>[];
+        for (int i = 0; i < arabicAyahs.length; i++) {
+          final arabic = arabicAyahs[i];
+          final surahInfo = arabic['surah'] as Map<String, dynamic>?;
+          final model = AyahModel()
+            ..surahNumber = surahInfo?['number'] ?? 0
+            ..ayahNumber = arabic['numberInSurah'] ?? (i + 1)
+            ..arabicText = arabic['text'] ?? ''
+            ..translationText =
+                i < englishAyahs.length ? (englishAyahs[i]['text'] ?? '') : ''
+            ..juz = arabic['juz'] ?? juzNumber
+            ..page = arabic['page'] ?? 1
+            ..hizb = arabic['hizbQuarter'] ?? 1
+            ..ruku = arabic['ruku'] ?? 1;
+          ayahs.add(model);
+        }
+        return ayahs;
+      } else if (juzData is Map<String, dynamic>) {
+        final arabicAyahs = juzData['ayahs'] as List<dynamic>? ?? [];
+        final ayahs = <AyahModel>[];
+        for (int i = 0; i < arabicAyahs.length; i++) {
+          final arabic = arabicAyahs[i];
+          final surahInfo = arabic['surah'] as Map<String, dynamic>?;
+          final model = AyahModel()
+            ..surahNumber = surahInfo?['number'] ?? 0
+            ..ayahNumber = arabic['numberInSurah'] ?? (i + 1)
+            ..arabicText = arabic['text'] ?? ''
+            ..translationText = ''
+            ..juz = arabic['juz'] ?? juzNumber
+            ..page = arabic['page'] ?? 1
+            ..hizb = arabic['hizbQuarter'] ?? 1
+            ..ruku = arabic['ruku'] ?? 1;
+          ayahs.add(model);
+        }
+        return ayahs;
+      }
+      return [];
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
 }
